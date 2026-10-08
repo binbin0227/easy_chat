@@ -1,0 +1,109 @@
+Easy Chat ASR runtime notices (2026-10-08)
+
+Unmodified official native artifact:
+https://github.com/k2-fsa/sherpa-onnx/releases/download/v1.13.8/sherpa-onnx-v1.13.8-win-x64-shared-MT-Release-no-tts-lib.tar.bz2
+SHA256 a1253e665c4f236119c443c8932a8acfca32a546c78c05962d483c9a0eae21b7
+Build workflow: https://github.com/k2-fsa/sherpa-onnx/blob/v1.13.8/.github/workflows/windows-x64.yaml
+TTS=OFF, PORTAUDIO=OFF, BUILD_SHARED_LIBS=ON, static CRT, Release, Windows x64.
+Only sherpa-onnx-c-api.dll, onnxruntime.dll and onnxruntime_providers_shared.dll
+are copied from the archive. No upstream DLLs are modified.
+
+sherpa-onnx v1.13.8: Apache-2.0, k2-fsa contributors.
+C API: Copyright (c) 2023 Xiaomi Corporation.
+https://github.com/k2-fsa/sherpa-onnx/tree/v1.13.8
+License: sherpa-onnx-LICENSE.txt.
+SherpaAsr.java is a modified ASR-only Java/JNA mapping of these declarations;
+its source marks the modification and retains Apache-2.0 attribution.
+
+JNA 5.17.0: Apache-2.0 chosen under the upstream dual license.
+Copyright (c) 2007-2015 Timothy Wall, All Rights Reserved.
+Native dispatch: Copyright (c) 1998 Sun Microsystems, Inc.;
+(c) 2007-2013 Timothy Wall; (c) 2007 Wayne Meissner. All Rights Reserved.
+https://github.com/java-native-access/jna/tree/5.17.0
+Unmodified Java classes and Windows x64 jnidispatch.dll only.
+Licenses: jna-LICENSE, jna-AL2.0.txt; libffi MIT: jna-libffi-LICENSE.txt.
+
+Additional native dependencies retained conservatively from the fixed build
+(not a claim that every optional algorithm is used):
+
+kaldi-native-fbank v1.22.3: Apache-2.0.
+https://github.com/csukuangfj/kaldi-native-fbank/tree/v1.22.3
+License: kaldi-native-fbank-LICENSE.txt.
+kissfft febd4caeed32e33ad8b2e0bb5ea77542c40f18ec: BSD-3-Clause.
+Copyright (c) 2003-2010 Mark Borgerding. All rights reserved.
+https://github.com/mborgerding/kissfft/tree/febd4caeed32e33ad8b2e0bb5ea77542c40f18ec
+Licenses: kissfft-COPYING.txt, kissfft-BSD-3-Clause.txt.
+kaldi-decoder v0.3.0: Apache-2.0.
+https://github.com/k2-fsa/kaldi-decoder/tree/v0.3.0
+License: kaldi-decoder-LICENSE.txt.
+OpenFst v1.8.5-2026-07-09: Apache-2.0, Copyright 2005-2026 Google LLC.
+https://github.com/csukuangfj/openfst/tree/v1.8.5-2026-07-09
+License: openfst-LICENSE.txt; full Apache terms: sherpa-onnx-LICENSE.txt.
+simple-sentencepiece v0.7: Apache-2.0.
+https://github.com/pkufool/simple-sentencepiece/tree/v0.7
+License: simple-sentencepiece-LICENSE.txt.
+nlohmann/json v3.12.0: MIT.
+https://github.com/nlohmann/json/tree/v3.12.0
+License: nlohmann-json-LICENSE.txt.
+hclust-cpp 2026-02-25: BSD-2-Clause.
+https://github.com/csukuangfj/hclust-cpp/tree/2026-02-25
+License and copyrights: hclust-cpp-LICENSE.txt.
+
+ONNX Runtime v1.28.2: MIT, Copyright (c) Microsoft Corporation.
+Exact unmodified source and dependency versions:
+https://github.com/microsoft/onnxruntime/tree/v1.28.2
+https://github.com/microsoft/onnxruntime/blob/v1.28.2/cmake/deps.txt
+Licenses: onnxruntime-asr-1.28.2-LICENSE.txt and
+onnxruntime-asr-1.28.2-ThirdPartyNotices.txt.
+MPL-2.0 source availability: ONNX Runtime includes Eigen components.
+Exact unmodified source:
+https://github.com/eigen-mirror/eigen/tree/1d8b82b0740839c0de7f1242a3585e3390ff5f33
+https://github.com/eigen-mirror/eigen/archive/1d8b82b0740839c0de7f1242a3585e3390ff5f33/eigen-1d8b82b0740839c0de7f1242a3585e3390ff5f33.zip
+The MPL-2.0 text and copyrights are retained in ONNX Runtime ThirdPartyNotices.
+Recipients may obtain this source; Easy Chat imposes no additional restrictions.
+
+fbank source copyright notices:
+* Copyright      2022  Xiaomi Corporation (authors: Fangjun Kuang)
+* Copyright (c)  2022  Xiaomi Corporation (authors: Fangjun Kuang)
+* Copyright (c)  2022-2023  Xiaomi Corporation (authors: Fangjun Kuang)
+* Copyright (c)  2023  Xiaomi Corporation (authors: Fangjun Kuang)
+* Copyright (c)  2024  Xiaomi Corporation (authors: Fangjun Kuang)
+* Copyright (c)  2025  Xiaomi Corporation (authors: Fangjun Kuang)
+* Copyright 2009-2011  Karel Vesely;  Petr Motlicek;  Saarland University
+* Copyright 2024       Xiaomi Corporation (authors: Fangjun Kuang)
+// Copyright (c)  2022  Xiaomi Corporation (authors: Fangjun Kuang)
+// Copyright (c)  2024  Brno University of Technology (authors: Karel Vesely)
+
+sentencepiece source copyright notices:
+* Copyright      2024    Wei Kang (wkang@pku.edu.cn)
+* Copyright      2024  Wei Kang (wkang@pku.edu.cn)
+Copyright (c) 2008-2014, Susumu Yata All rights reserved.
+Copyright (c) 2012 Jakob Progsch, V谩clav Zeman
+Redistributions in binary form must reproduce the above copyright notice, this
+Redistributions of source code must retain the above copyright notice, this list
+
+hclust source copyright notices:
+// Copyright: Christoph Dalitz, 2020
+// Copyright: Daniel Muellner, 2011
+// Copyright: Daniel M眉llner, 2011 <http://danifold.net>
+Copyright 漏 2011 Daniel M眉llner
+
+Embedded simple-sentencepiece components: darts-clone (BSD-2-Clause),
+ThreadPool (zlib). Full retained notices: simple-sentencepiece-embedded-LICENSES.txt.
+
+kaldi-decoder source copyrights:
+// Copyright (c)  2022  Xiaomi Corporation
+// Copyright (c)  2023     Xiaomi Corporation
+// Copyright (c)  2023   Xiaomi Corporation
+// Copyright (c)  2023  Xiaomi Corporation
+// Copyright (c)  2023 Xiaomi Corporation
+// Copyright 2009-2011     Microsoft Corporation
+// Copyright 2009-2011   Microsoft Corporation
+// Copyright 2009-2011  Microsoft Corporation
+// Copyright 2009-2011  Microsoft Corporation;  Saarland University;
+// Copyright 2009-2011  Ondrej Glembek;  Microsoft Corporation;  Yanmin Qian;
+// Copyright 2009-2011 Microsoft Corporation
+// Copyright 2009-2012  Microsoft Corporation
+// Copyright 2009-2012  Microsoft Corporation  Mirko Hannemann
+// Copyright 2009-2013  Microsoft Corporation;  Lukas Burget;
+// Copyright 2009-2013  Microsoft Corporation;  Mirko Hannemann;

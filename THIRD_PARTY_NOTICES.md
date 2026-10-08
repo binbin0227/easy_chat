@@ -1,64 +1,54 @@
 # Third-party components
 
-Easy Chat is MIT licensed. Third-party licenses are retained under `licenses/` in the JAR.
+Easy Chat original code is MIT licensed (root LICENSE). The derived C API ABI
+mapping in src/asrWorker/java/io/github/easychat/worker/SherpaAsr.java retains
+Apache-2.0, Xiaomi attribution and a modification notice. Third-party licenses
+are retained under licenses/ in both the mod and isolated worker JAR.
 
 ## sherpa-onnx 1.13.8 - Apache-2.0
 
-Copyright k2-fsa contributors. Source: https://github.com/k2-fsa/sherpa-onnx/tree/v1.13.8
+Source: https://github.com/k2-fsa/sherpa-onnx/tree/v1.13.8
+Unmodified official Windows x64 C API runtime:
+sherpa-onnx-v1.13.8-win-x64-shared-MT-Release-no-tts-lib.tar.bz2
+SHA256: a1253e665c4f236119c443c8932a8acfca32a546c78c05962d483c9a0eae21b7
+The official build disables TTS and PortAudio. The previous TTS-enabled Java JNI
+library, eSpeak-NG and Piper are excluded. License: licenses/sherpa-onnx-LICENSE.txt.
+Native dependencies, copyrights and source availability: licenses/asr-runtime-NOTICES.txt.
 
-The Java API and official Windows x64 JNI runtime run inside a separate Java worker.
-The upstream Java API/native DLLs are unmodified. Easy Chat supplies its own worker protocol.
-License: `licenses/sherpa-onnx-LICENSE.txt`.
+## JNA 5.17.0 - Apache-2.0 chosen
 
-Official release checksums:
-- sherpa-onnx-jvm-1.13.8.jar: `77b7b047fade4eadada96b568eb92615049aaf1dc317c7244e46c1ea38b9a63b`
-- sherpa-onnx-native-lib-win-x64-1.13.8.jar: `33fbdbd5410e9ba9bdda94aa164ec8f7825bb49246420d8ce9bdd88219d97039`
+https://github.com/java-native-access/jna/tree/5.17.0
+Upstream offers Apache-2.0 OR LGPL-2.1-or-later; we choose Apache-2.0.
+Unmodified Java classes and Windows x64 jnidispatch.dll only.
+Licenses: jna-LICENSE, jna-AL2.0.txt and jna-libffi-LICENSE.txt (libffi MIT).
 
 ## Paraformer model - Apache-2.0
 
-The default Chinese/English speech recognizer is the int8 ONNX conversion
-`sherpa-onnx-paraformer-zh-2024-03-09`, exported by Fangjun Kuang/k2-fsa from
-Alibaba DAMO Academy / FunASR's
-`iic/speech_paraformer-large_asr_nat-zh-cn-16k-common-vocab8358-tensorflow1`.
-
-Original model: https://modelscope.cn/models/iic/speech_paraformer-large_asr_nat-zh-cn-16k-common-vocab8358-tensorflow1
+Unmodified int8 conversion sherpa-onnx-paraformer-zh-2024-03-09 by Fangjun Kuang/k2-fsa,
+from Alibaba DAMO Academy / FunASR model
+https://modelscope.cn/models/iic/speech_paraformer-large_asr_nat-zh-cn-16k-common-vocab8358-tensorflow1
 Conversion: https://huggingface.co/csukuangfj/sherpa-onnx-paraformer-zh-2024-03-09
-License text for the model: `licenses/Paraformer-LICENSE.txt` (Apache-2.0).
-`licenses/FunASR-LICENSE.txt` covers FunASR project code (MIT), not these model weights.
-Conversion weights are unmodified.
+Model license/card: licenses/Paraformer-LICENSE.txt, licenses/Paraformer-MODEL-CARD.md.
+FunASR-LICENSE.txt covers FunASR code (MIT), not these weights.
 
-## OPUS-MT / Marian translation models - Apache-2.0
+## OPUS-MT / Marian models - Apache-2.0
 
-Helsinki-NLP models, quantized ONNX conversions distributed by Xenova:
-- English to Chinese: https://huggingface.co/Xenova/opus-mt-en-zh
-- Chinese to English: https://huggingface.co/Xenova/opus-mt-zh-en
+Unmodified Helsinki-NLP models, quantized ONNX conversions distributed by Xenova:
+https://huggingface.co/Xenova/opus-mt-en-zh
+https://huggingface.co/Xenova/opus-mt-zh-en
+Both directions include checksum manifests. Original/conversion model notices:
+licenses/opus-mt-LICENSE.txt and licenses/opus-mt-MODEL-NOTICE.txt.
+Easy Chat implements tokenizer handling and beam-search inference.
 
-Both directions are bundled with checksum manifests. Copyright and model notices:
-`licenses/opus-mt-LICENSE.txt`, `licenses/opus-mt-MODEL-NOTICE.txt`.
-No modifications are made to model weights. Easy Chat implements local tokenizer
-handling and beam-search inference around the exported models.
-
-## ONNX Runtime - MIT
+## ONNX Runtime - MIT and accompanying third-party terms
 
 Copyright Microsoft Corporation. https://github.com/microsoft/onnxruntime
-The mod uses the 1.17.3 Java runtime for OPUS. The isolated ASR worker uses the
-ONNX Runtime DLL included in the official sherpa release; it is not loaded into
-Minecraft's process. Retained notices: `licenses/onnxruntime-LICENSE.txt` and
-`licenses/onnxruntime-ThirdPartyNotices.txt`.
+OPUS uses 1.17.3 (onnxruntime-LICENSE.txt and onnxruntime-ThirdPartyNotices.txt).
+The isolated ASR worker uses 1.28.2 from the pinned sherpa release
+(onnxruntime-asr-1.28.2-LICENSE.txt and onnxruntime-asr-1.28.2-ThirdPartyNotices.txt).
+Versions run in separate processes. Eigen MPL-2.0 source availability is recorded
+in licenses/asr-runtime-NOTICES.txt.
 
-Whisper and Qwen/llama engines and weights are not part of this distribution.
-Historical notices may remain in source archives for previously built versions.
-Gson, Minecraft, Forge and LWJGL are supplied by the game/loader and are not copied
-into this mod. Minecraft itself is not distributed by this project.
-
-## Release audit finding: GPLv3 TTS code in the ASR native runtime
-
-The official Windows JNI library above also contains statically linked eSpeak-NG
-and piper-phonemize text-to-speech code, although Easy Chat uses ASR only.
-Its distribution must not be described as wholly MIT/Apache licensed.
-Pinned eSpeak-NG source: https://github.com/csukuangfj/espeak-ng/tree/ed530aa113046142eb5115cf2fc9157854d0ffe1
-GPL text: `licenses/espeak-ng-COPYING.txt`.
-The official build enables TTS by default; disabling the executable alone does
-not remove its library code. Details and unresolved redistribution requirements
-are documented in `docs/LICENSE_REVIEW.md`. This build is NOT cleared for public
-binary release. Adding license text alone does not discharge source obligations.
+Whisper, Qwen/llama and their weights are excluded. Minecraft, Forge, LWJGL and
+Gson are supplied by the game/loader, not copied into the mod. Gradle Wrapper
+Apache-2.0 LICENSE/NOTICE are retained in the repository licenses/ directory.

@@ -1,18 +1,18 @@
 [
   {
+    "path": "work/libs/jna-5.17.0.jar",
+    "sha256": "b3a9408e7c51e08ef0e3bfcc08f443f6ec0f6191ba8cd7c18d53d2b22e5bdbc0",
+    "url": "https://repo.maven.apache.org/maven2/net/java/dev/jna/jna/5.17.0/jna-5.17.0.jar"
+  },
+  {
+    "path": "work/libs/sherpa-onnx-v1.13.8-win-x64-shared-MT-Release-no-tts-lib.tar.bz2",
+    "sha256": "a1253e665c4f236119c443c8932a8acfca32a546c78c05962d483c9a0eae21b7",
+    "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/v1.13.8/sherpa-onnx-v1.13.8-win-x64-shared-MT-Release-no-tts-lib.tar.bz2"
+  },
+  {
     "path": "work/libs/onnxruntime-1.17.3.jar",
     "sha256": "40098c9ed1e61ec68c72113e3641c2f987428ee88316b4047a039039e77b8e03",
     "url": "https://repo.maven.apache.org/maven2/com/microsoft/onnxruntime/onnxruntime/1.17.3/onnxruntime-1.17.3.jar"
-  },
-  {
-    "path": "work/libs/sherpa-onnx-jvm-1.13.8.jar",
-    "sha256": "77b7b047fade4eadada96b568eb92615049aaf1dc317c7244e46c1ea38b9a63b",
-    "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/v1.13.8/sherpa-onnx-jvm-1.13.8.jar"
-  },
-  {
-    "path": "work/libs/sherpa-onnx-native-lib-win-x64-1.13.8.jar",
-    "sha256": "33fbdbd5410e9ba9bdda94aa164ec8f7825bb49246420d8ce9bdd88219d97039",
-    "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/v1.13.8/sherpa-onnx-native-lib-win-x64-1.13.8.jar"
   },
   {
     "path": "work/models/paraformer-zh-int8/model.int8.onnx",

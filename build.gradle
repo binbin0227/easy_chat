@@ -43,7 +43,7 @@ test {
 jar {
     exclude 'easychat/whisper-bin-x64.zip', 'easychat/llama-cpu-x64.zip', 'easychat/llama-vulkan-x64.zip', 'assets/easychat/models/ggml-*.bin'
     exclude 'io/github/easychat/engine/WhisperEngine*.class', 'io/github/easychat/chat/GgufTranslator*.class', 'io/github/easychat/chat/QwenTranslator*.class'
-    manifest { attributes('EasyChat-Build': '20261008-release-audit', 'Implementation-Version': project.version) }
+    manifest { attributes('EasyChat-Build': '20261008-asr-only', 'Implementation-Version': project.version) }
     from('LICENSE')
     from('THIRD_PARTY_NOTICES.md')
     from(zipTree('work/libs/onnxruntime-1.17.3.jar')) {
@@ -57,7 +57,7 @@ tasks.named('wrapper') {
 }
 sourceSets {
     asrWorker {
-        compileClasspath += files('work/libs/sherpa-onnx-jvm-1.13.8.jar')
+        compileClasspath += files('work/libs/jna-5.17.0.jar')
     }
     test {
         compileClasspath += sourceSets.main.compileClasspath
@@ -70,8 +70,16 @@ tasks.register('paraformerWorkerJar', Jar) {
     archiveFileName = 'paraformer-worker.jar'
     destinationDirectory = layout.buildDirectory.dir('asr-worker')
     from(sourceSets.asrWorker.output)
-    from(zipTree('work/libs/sherpa-onnx-jvm-1.13.8.jar')) { exclude 'META-INF/**' }
-    from(zipTree('work/libs/sherpa-onnx-native-lib-win-x64-1.13.8.jar')) { exclude 'META-INF/**' }
+    from(zipTree('work/libs/jna-5.17.0.jar')) {
+        include 'com/sun/jna/**/*.class', 'com/sun/jna/win32-x86-64/jnidispatch.dll'
+    }
+    from(tarTree(resources.bzip2('work/libs/sherpa-onnx-v1.13.8-win-x64-shared-MT-Release-no-tts-lib.tar.bz2'))) {
+        include '**/lib/onnxruntime.dll', '**/lib/onnxruntime_providers_shared.dll', '**/lib/sherpa-onnx-c-api.dll'
+        eachFile { path = 'easychat/native/win-x64/' + name }
+        includeEmptyDirs = false
+    }
+    from('src/main/resources/licenses') { into 'licenses' }
+    from('THIRD_PARTY_NOTICES.md')
     manifest { attributes('Main-Class': 'io.github.easychat.worker.ParaformerWorker') }
 }
 tasks.named('processResources') {

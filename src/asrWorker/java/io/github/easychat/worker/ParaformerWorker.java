@@ -1,6 +1,6 @@
 package io.github.easychat.worker;
 
-import com.k2fsa.sherpa.onnx.*;
+import com.sun.jna.*;
 import javax.sound.sampled.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -15,10 +15,15 @@ public final class ParaformerWorker {
         System.setOut(new PrintStream(System.err, true, "UTF-8"));
         Path runtime = Paths.get(args[2]);
         Files.createDirectories(runtime);
+        System.setProperty("jna.boot.library.path", runtime.toAbsolutePath().toString());
+        System.setProperty("jna.nosys", "true");
+        System.setProperty("jna.nounpack", "true");
+        Files.deleteIfExists(runtime.resolve("sherpa-onnx-jni.dll")); // Owned retired TTS-enabled runtime.
         // Load our exact DLLs from a stable, owned runtime directory, never global PATH.
-        for (String name : new String[]{"onnxruntime.dll", "sherpa-onnx-jni.dll"}) {
+        for (String name : new String[]{"jnidispatch.dll", "onnxruntime_providers_shared.dll", "onnxruntime.dll", "sherpa-onnx-c-api.dll"}) {
             Path file = runtime.resolve(name);
-            try (InputStream input = ParaformerWorker.class.getResourceAsStream("/sherpa-onnx/native/win-x64/" + name)) {
+            String resource = name.equals("jnidispatch.dll") ? "/com/sun/jna/win32-x86-64/jnidispatch.dll" : "/easychat/native/win-x64/" + name;
+            try (InputStream input = ParaformerWorker.class.getResourceAsStream(resource)) {
                 if (input == null) throw new IOException("Paraformer 缺少 " + name);
                 ByteArrayOutputStream content = new ByteArrayOutputStream(); byte[] buffer = new byte[65536]; int n;
                 while ((n = input.read(buffer)) != -1) content.write(buffer, 0, n);
@@ -29,16 +34,20 @@ public final class ParaformerWorker {
                     finally { Files.deleteIfExists(temporary); }
                 }
             }
-            System.load(file.toAbsolutePath().toString());
+            if (!name.equals("jnidispatch.dll")) NativeLibrary.getInstance(file.toAbsolutePath().toString());
         }
-        LibraryLoader.setAutoLoadEnabled(false);
-        OfflineModelConfig models = OfflineModelConfig.builder()
-                .setParaformer(OfflineParaformerModelConfig.builder().setModel(args[0]).build())
-                .setTokens(args[1]).setNumThreads(4).setProvider("cpu").build();
-        OfflineRecognizer recognizer = new OfflineRecognizer(OfflineRecognizerConfig.builder()
-                .setOfflineModelConfig(models)
-                .setFeatureConfig(FeatureConfig.builder().setSampleRate(16000).setFeatureDim(80).build())
-                .setDecodingMethod("greedy_search").build());
+        SherpaAsr.Api api = Native.load(runtime.resolve("sherpa-onnx-c-api.dll").toAbsolutePath().toString(),
+                SherpaAsr.Api.class, java.util.Collections.singletonMap(Library.OPTION_STRING_ENCODING, "UTF-8"));
+        System.err.println("EasyChat ASR-only: sherpa " + api.SherpaOnnxGetVersionStr()
+                + ", ONNX Runtime " + api.SherpaOnnxGetOnnxruntimeVersionStr());
+        SherpaAsr.SherpaOnnxOfflineRecognizerConfig config = new SherpaAsr.SherpaOnnxOfflineRecognizerConfig();
+        config.feat_config.sample_rate = 16000; config.feat_config.feature_dim = 80;
+        config.model_config.paraformer.model = args[0]; config.model_config.tokens = args[1];
+        config.model_config.num_threads = 4; config.model_config.provider = "cpu";
+        config.model_config.model_type = "paraformer"; config.decoding_method = "greedy_search";
+        config.max_active_paths = 4; config.hotwords_score = 1.5f;
+        Pointer recognizer = api.SherpaOnnxCreateOfflineRecognizer(config);
+        if (recognizer == null) throw new IOException("Paraformer 模型初始化失败");
         try {
             protocol.writeInt(READY); protocol.flush();
             DataInputStream input = new DataInputStream(System.in);
@@ -47,12 +56,12 @@ public final class ParaformerWorker {
                 try { size = input.readInt(); } catch (EOFException done) { break; }
                 if (size <= 0 || size > 2 * 1024 * 1024) throw new IOException("音频大小无效");
                 byte[] wav = new byte[size]; input.readFully(wav);
-                try { reply(protocol, 0, decode(recognizer, wav)); }
+                try { reply(protocol, 0, decode(api, recognizer, wav)); }
                 catch (Exception error) { reply(protocol, 1, error.getMessage() == null ? "语音识别失败" : error.getMessage()); }
             }
-        } finally { recognizer.release(); }
+        } finally { api.SherpaOnnxDestroyOfflineRecognizer(recognizer); }
     }
-    private static String decode(OfflineRecognizer recognizer, byte[] wav) throws Exception {
+    private static String decode(SherpaAsr.Api api, Pointer recognizer, byte[] wav) throws Exception {
         try (AudioInputStream audio = AudioSystem.getAudioInputStream(new ByteArrayInputStream(wav))) {
             AudioFormat format = audio.getFormat();
             if (format.getChannels() != 1 || format.getSampleSizeInBits() != 16 || format.isBigEndian()
@@ -62,9 +71,18 @@ public final class ParaformerWorker {
             while ((n = audio.read(buffer)) != -1) pcm.write(buffer, 0, n);
             byte[] bytes = pcm.toByteArray(); float[] samples = new float[bytes.length / 2];
             for (int i = 0; i < samples.length; i++) samples[i] = (short)((bytes[i * 2] & 255) | (bytes[i * 2 + 1] << 8)) / 32768f;
-            OfflineStream stream = recognizer.createStream();
-            try { stream.acceptWaveform(samples, 16000); recognizer.decode(stream); return recognizer.getResult(stream).getText(); }
-            finally { stream.release(); }
+            Pointer stream = api.SherpaOnnxCreateOfflineStream(recognizer);
+            if (stream == null) throw new IOException("无法创建识别输入流");
+            try {
+                api.SherpaOnnxAcceptWaveformOffline(stream, 16000, samples, samples.length);
+                api.SherpaOnnxDecodeOfflineStream(recognizer, stream);
+                Pointer result = api.SherpaOnnxGetOfflineStreamResult(stream);
+                if (result == null) throw new IOException("识别结果为空");
+                try {
+                    Pointer text = result.getPointer(0); // First member is const char *text.
+                    return text == null ? "" : text.getString(0, "UTF-8").trim();
+                } finally { api.SherpaOnnxDestroyOfflineRecognizerResult(result); }
+            } finally { api.SherpaOnnxDestroyOfflineStream(stream); }
         }
     }
     private static void reply(DataOutputStream output, int status, String text) throws IOException {

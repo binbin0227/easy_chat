@@ -30,7 +30,7 @@ python ./scripts/check-release.py
 
 `prepare-dependencies.ps1 -CheckOnly` 仅核对已有文件；`-Source Mirror` 可为 Hugging Face 文件选择备用源。无需将模型、运行库或构建缓存提交到 Git。
 
-**发布状态：源码可上传；当前完整 JAR 未通过二进制许可发布检查。** 官方 sherpa JNI 带有 GPLv3 eSpeak-NG 合成代码，必须先更换为不含 TTS 的识别运行库，或完成 GPL 对应源码等分发义务。见 [许可审计](docs/LICENSE_REVIEW.md)。`check-release.py` 默认因此返回非零；`--allow-license-blockers` 仅用于本地包结构校验，不能视作发布批准。
+当前已换用官方无 TTS 的识别运行库，保留第三方许可、版权和对应源码获取说明。发布检查核对实际 DLL 哈希及模型、许可材料，详见 [许可审计](docs/LICENSE_REVIEW.md)。
 
 Paraformer 在一个持久的 Java CPU 后台进程中运行，隔离其 ONNX Runtime DLL 与游戏内 OPUS 的版本。首次启动加载模型，后续复用。进程读取有超时，取消语音会终止该进程；游戏退出时也会清理。
 

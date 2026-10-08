@@ -57,10 +57,22 @@
 本次验证包括单元测试、完整发行包校验、截图正文的实际 OPUS 推理；实际 Lunar 进服显示仍需用户复验。
 
 
-## 2026-10-08 发布前目录整理与许可审计
+## 2026-10-08 初次许可审计（历史记录；下节记录解决情况）
 
 - 已初始化 main 分支 Git；旧引擎、旧截图、实验目录与临时日志保留在 work/archive，不提交模型、缓存、游戏配置和完整 JAR。
 - prepare-dependencies.ps1 -CheckOnly 验证全部 10 个依赖文件摘要；脚本不安装 Java。
 - 干净构建及 35 项测试通过（已有 JDK 21 编译、JDK 8 运行测试）。仅 JDK 21 的测试执行遇到 Windows 中文目录 Gradle worker 启动问题，本轮保留已验证的 JDK 8 测试配置；没有新增安装 Java。
 - 最终完整包权重、许可证、引擎目录和重复条目检查通过；默认公开发布检查因 GPLv3 native 依赖正确返回非零。这是未解决的许可阻碍，不是已通过公开发布审核。
 - 详细日志位于本地 work/reports/release-audit-*.log；源码公开范围检查位于 work/reports/repository-publish-check.json。本次未发布、未创建远端仓库，也未改变当前 Lunar 已安装包。
+
+
+## 2026-10-08 无 TTS 运行库替换（20261008-asr-only）
+
+- 换用固定哈希的官方 no-tts C API DLL，通过 JNA 调用；不再分发旧 Java JNI/eSpeak/Piper。
+- 35 项单元测试通过。最终运行库实际报告 sherpa 1.13.8、ONNX Runtime 1.28.2。
+- 完整包实际 Paraformer → OPUS 测试 5 条语音：谁来防守、守床、绿宝石、蓝队、珍珠；3 条聊天英译中均返回中文。
+- Java 8 独立进程重启、旧 JNI 缓存清理、原生库和模型有效缓存复用、模型持久删除与显式恢复通过。
+- 保留完整版权、BSD/zlib/MIT/Apache 及 ORT 的第三方通知，提供 Eigen MPL 源码获取说明。
+- 发布检查核对最终 DLL/归档/模型摘要、嵌套 worker 许可和重复条目，不再豁免旧 GPL 阻碍。
+- 测试是合成录音和本地链路验证；守床、末影珍珠和 blocks 的 OPUS 术语误译仍存在，未在本次修改。
+- 未启动游戏或发布；真实麦克风及 Lunar 服务器画面仍需手动验收。日志在 work/reports/asr-only-*.log。

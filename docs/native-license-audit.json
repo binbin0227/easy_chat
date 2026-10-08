@@ -1,13 +1,21 @@
 {
-  "component": "sherpa-onnx-native-lib-win-x64-1.13.8.jar",
-  "sha256": "33fbdbd5410e9ba9bdda94aa164ec8f7825bb49246420d8ce9bdd88219d97039",
-  "dll_sha256": "19295369c59d3de340a0c2b470f01598c0a6f273a5419af58363bbe7f1bf0dda",
-  "symbols_present": [
+  "component": "sherpa-onnx-v1.13.8-win-x64-shared-MT-Release-no-tts-lib.tar.bz2",
+  "sha256": "a1253e665c4f236119c443c8932a8acfca32a546c78c05962d483c9a0eae21b7",
+  "source": "https://github.com/k2-fsa/sherpa-onnx/tree/v1.13.8",
+  "tts_enabled": false,
+  "native_files": {
+    "onnxruntime.dll": "7f66f939a881baf4f46a2216496798edf4a1429878b646d12674aa62f27d8a25",
+    "onnxruntime_providers_shared.dll": "551d0e1fe4c227d8542314ba718d52f4379e0c7bfe729a37c59833a884e27b4d",
+    "sherpa-onnx-c-api.dll": "86c7807d12982aa31c5cae57c686f30df9e5d5db4309b314d1efd5c873a8333c"
+  },
+  "jna_version": "5.17.0",
+  "jna_license_choice": "Apache-2.0",
+  "jnidispatch_sha256": "5a7ff949f6d93d86491eb5b26b1cfc60051168a60622650224b89995ac420023",
+  "forbidden_symbols": [
     "espeak_Initialize",
     "espeak_TextToPhonemes",
-    "espeak_ng_Initialize",
-    "ESPEAK_DATA_PATH"
+    "phonemize_eSpeak"
   ],
-  "espeak_source_revision": "ed530aa113046142eb5115cf2fc9157854d0ffe1",
-  "public_binary_release_cleared": false
+  "onnxruntime_asr": "1.28.2",
+  "method": "Official no-TTS asset and upstream build flags, pinned archive and DLL hashes, known eSpeak/Piper symbol exclusion; not a local recompilation"
 }
