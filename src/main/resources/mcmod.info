@@ -1,0 +1,12 @@
+[
+  {
+    "modid": "easychat",
+    "name": "Easy Chat",
+    "description": "按住说中文，松开后本地翻译为英文。支持麦克风选择、测试及按键设置。",
+    "version": "${version}",
+    "mcversion": "1.8.9",
+    "authorList": ["Easy Chat contributors"],
+    "credits": "whisper.cpp / Whisper",
+    "dependencies": []
+  }
+]

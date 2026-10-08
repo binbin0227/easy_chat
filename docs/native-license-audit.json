@@ -1,0 +1,13 @@
+{
+  "component": "sherpa-onnx-native-lib-win-x64-1.13.8.jar",
+  "sha256": "33fbdbd5410e9ba9bdda94aa164ec8f7825bb49246420d8ce9bdd88219d97039",
+  "dll_sha256": "19295369c59d3de340a0c2b470f01598c0a6f273a5419af58363bbe7f1bf0dda",
+  "symbols_present": [
+    "espeak_Initialize",
+    "espeak_TextToPhonemes",
+    "espeak_ng_Initialize",
+    "ESPEAK_DATA_PATH"
+  ],
+  "espeak_source_revision": "ed530aa113046142eb5115cf2fc9157854d0ffe1",
+  "public_binary_release_cleared": false
+}

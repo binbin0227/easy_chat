@@ -1,0 +1,27 @@
+OPUS-MT English to Chinese model
+Original contributors: Helsinki-NLP / OPUS-MT contributors
+Original source and Apache-2.0 license declaration:
+https://huggingface.co/Helsinki-NLP/opus-mt-en-zh/blob/main/README.md
+
+ONNX conversion and quantization: Xenova
+https://huggingface.co/Xenova/opus-mt-en-zh
+Pinned revision: 046f55aec303cdee3e0318604406d4df20f1e8ea
+The conversion model card points to Helsinki-NLP/opus-mt-en-zh as its base.
+It does not declare an additional license.
+
+Bundled files: encoder_model_quantized.onnx, decoder_model_quantized.onnx,
+tokenizer.json. Easy Chat makes no further modifications to these files.
+Easy Chat adds a separate Java tokenizer and ONNX CPU inference adapter,
+and packages the files in a JAR.
+The model's Apache-2.0 license is not replaced by the application's MIT license.
+
+OPUS-MT Chinese to English model
+Original contributors: Helsinki-NLP / OPUS-MT contributors
+Original Apache-2.0 declaration:
+https://huggingface.co/Helsinki-NLP/opus-mt-zh-en/blob/main/README.md
+ONNX conversion and quantization: Xenova
+https://huggingface.co/Xenova/opus-mt-zh-en
+Pinned revision: 39d480d52a9ea3065a1f117adfe4dbc55de10e6f
+Bundled files: encoder_model_quantized.onnx, decoder_model_quantized.onnx,
+tokenizer.json. Redistributed without further modification.
+License text: opus-mt-LICENSE.txt.

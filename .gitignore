@@ -1,0 +1,26 @@
+.gradle/
+build/
+run/
+work/
+outputs/
+.idea/
+*.iml
+*.log
+
+# Local credentials and machine-specific settings
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.vscode/
+.DS_Store
+Thumbs.db
+# Weights and native binaries belong in ignored work/ or release assets.
+*.onnx
+*.gguf
+*.dll
+*.exe
+*.zip
+*.jar
+!gradle/wrapper/gradle-wrapper.jar

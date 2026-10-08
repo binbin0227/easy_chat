@@ -1,0 +1,24 @@
+[
+  {
+    "id": "opus-en-zh",
+    "name": "OPUS-MT 英译中",
+    "directory": "text-model/opus-en-zh",
+    "engine": "opus",
+    "direction": "en-zh",
+    "resource": "/easychat/text-model/",
+    "manifest": "/easychat/text-model.properties",
+    "bytes": 119122796,
+    "license": "Apache-2.0"
+  },
+  {
+    "id": "opus-zh-en",
+    "name": "OPUS-MT 中译英",
+    "directory": "text-model/opus-zh-en",
+    "engine": "opus",
+    "direction": "zh-en",
+    "resource": "/easychat/text-model-zh-en/",
+    "manifest": "/easychat/text-model-zh-en.properties",
+    "bytes": 119123183,
+    "license": "Apache-2.0"
+  }
+]

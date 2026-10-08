@@ -1,0 +1,52 @@
+[
+  {
+    "path": "work/libs/onnxruntime-1.17.3.jar",
+    "sha256": "40098c9ed1e61ec68c72113e3641c2f987428ee88316b4047a039039e77b8e03",
+    "url": "https://repo.maven.apache.org/maven2/com/microsoft/onnxruntime/onnxruntime/1.17.3/onnxruntime-1.17.3.jar"
+  },
+  {
+    "path": "work/libs/sherpa-onnx-jvm-1.13.8.jar",
+    "sha256": "77b7b047fade4eadada96b568eb92615049aaf1dc317c7244e46c1ea38b9a63b",
+    "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/v1.13.8/sherpa-onnx-jvm-1.13.8.jar"
+  },
+  {
+    "path": "work/libs/sherpa-onnx-native-lib-win-x64-1.13.8.jar",
+    "sha256": "33fbdbd5410e9ba9bdda94aa164ec8f7825bb49246420d8ce9bdd88219d97039",
+    "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/v1.13.8/sherpa-onnx-native-lib-win-x64-1.13.8.jar"
+  },
+  {
+    "path": "work/models/paraformer-zh-int8/model.int8.onnx",
+    "sha256": "90bc03034ae1bef9575f8cc798cd1519c8be8aa9e8b458a033e32017ff4d584c",
+    "url": "https://huggingface.co/csukuangfj/sherpa-onnx-paraformer-zh-2024-03-09/resolve/main/model.int8.onnx"
+  },
+  {
+    "path": "work/text-translation/encoder_model_quantized.onnx",
+    "sha256": "d3b7912bf6a9bd27e4c074c2df91d4ff3d5b4bc5f7f6c8d7cc9c805c98fbafee",
+    "url": "https://huggingface.co/Xenova/opus-mt-en-zh/resolve/046f55aec303cdee3e0318604406d4df20f1e8ea/onnx/encoder_model_quantized.onnx"
+  },
+  {
+    "path": "work/text-translation/decoder_model_quantized.onnx",
+    "sha256": "2c66a3981099b40edbb3a0d65e015d05964d42fecb9780f8422776eff5939112",
+    "url": "https://huggingface.co/Xenova/opus-mt-en-zh/resolve/046f55aec303cdee3e0318604406d4df20f1e8ea/onnx/decoder_model_quantized.onnx"
+  },
+  {
+    "path": "work/text-translation/tokenizer.json",
+    "sha256": "d0c7da27056e8f42adce9e76d8e792e5daa64e15f5acd2e7aabf0121877dd4c1",
+    "url": "https://huggingface.co/Xenova/opus-mt-en-zh/resolve/046f55aec303cdee3e0318604406d4df20f1e8ea/tokenizer.json"
+  },
+  {
+    "path": "work/text-translation-zh-en/encoder_model_quantized.onnx",
+    "sha256": "84d5e171b626bc8b6b220d022ac58696e9528c25deeacca62b5cbf4364547a99",
+    "url": "https://huggingface.co/Xenova/opus-mt-zh-en/resolve/39d480d52a9ea3065a1f117adfe4dbc55de10e6f/onnx/encoder_model_quantized.onnx"
+  },
+  {
+    "path": "work/text-translation-zh-en/decoder_model_quantized.onnx",
+    "sha256": "debcc3054b9ff9aaed972bd6e251a459abe1e2f1402da1efa63163dc2f46ef73",
+    "url": "https://huggingface.co/Xenova/opus-mt-zh-en/resolve/39d480d52a9ea3065a1f117adfe4dbc55de10e6f/onnx/decoder_model_quantized.onnx"
+  },
+  {
+    "path": "work/text-translation-zh-en/tokenizer.json",
+    "sha256": "b306d0301cf280bfd647d7067b5ade2a97b987e6d678df110703c002433643ff",
+    "url": "https://huggingface.co/Xenova/opus-mt-zh-en/resolve/39d480d52a9ea3065a1f117adfe4dbc55de10e6f/tokenizer.json"
+  }
+]
