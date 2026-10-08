@@ -43,7 +43,7 @@ test {
 jar {
     exclude 'easychat/whisper-bin-x64.zip', 'easychat/llama-cpu-x64.zip', 'easychat/llama-vulkan-x64.zip', 'assets/easychat/models/ggml-*.bin'
     exclude 'io/github/easychat/engine/WhisperEngine*.class', 'io/github/easychat/chat/GgufTranslator*.class', 'io/github/easychat/chat/QwenTranslator*.class'
-    manifest { attributes('EasyChat-Build': '20261008-asr-only', 'Implementation-Version': project.version) }
+    manifest { attributes('EasyChat-Build': '20261008-chat-clean', 'Implementation-Version': project.version) }
     from('LICENSE')
     from('THIRD_PARTY_NOTICES.md')
     from(zipTree('work/libs/onnxruntime-1.17.3.jar')) {

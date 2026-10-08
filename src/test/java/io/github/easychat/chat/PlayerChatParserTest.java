@@ -4,6 +4,17 @@ import java.util.*;
 import static org.junit.Assert.*;
 public class PlayerChatParserTest {
     private final Set<String> players = new HashSet<>(Arrays.asList("alex", "bob"));
+    @Test public void recognizesDefaultRankScreenshotDuringTabTransfer() {
+        PlayerChatParser.Message message = PlayerChatParser.parse("§7StingerC70§7: i like dudes as a dude", Collections.emptySet());
+        assertNotNull(message);
+        assertEquals("StingerC70", message.sender);
+        assertEquals("i like dudes as a dude", message.text);
+        assertNotNull(PlayerChatParser.parse("§r§7StingerC70§r§7: hello§r", Collections.emptySet()));
+        assertNotNull(PlayerChatParser.parse("§7StingerC70: hello§r", Collections.emptySet()));
+        assertNotNull(PlayerChatParser.parse(new net.minecraft.util.ChatComponentText("§7StingerC70§7: hello").getFormattedText(), Collections.emptySet()));
+        for(String notice:new String[]{"Unknown: hi", "§7Server§7: Restarting soon", "§7TIP§7: Buy ranks", "§7[NPC] Dave: hello", "§7游戏将在4秒后开始!"})
+            assertNull(notice, PlayerChatParser.parse(notice, Collections.emptySet()));
+    }
     @Test public void recognizesScreenshotTeamMessageAndEmbeddedLineBreaks() {
         String prefix = "§e§7[6✫]§r §e[黄队] §7PC_Is_Lagging§7: ";
         String body = "Christ_isGod tuffffffffffffffffff name bro";

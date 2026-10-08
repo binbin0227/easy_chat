@@ -16,6 +16,9 @@ public final class PlayerChatParser {
     private static final String PREFIX = "(?:" + TEAM + "|" + LEVEL + ")";
     private static final Pattern HYPIXEL = Pattern.compile("^(?:(?<channel>(?:Party|Guild|Officer|Co-op|Team|队伍|组队|公会|官员|协作) > |(?:From|来自) |\\[(?:TEAM|SHOUT|队伍|喊话)\\]\\s*))?" + PREFIX + "{0,3}" + RANK + PREFIX + "{0,2}(?<sender>[A-Za-z0-9_]{1,16})(?:\\s*\\[[A-Za-z0-9_ +*-]{1,16}\\])?\\s*: (?<body>.+)$");
     private static final Pattern VANILLA = Pattern.compile("^<" + NAME + "> (.+)$");
+    // Default-rank public chat uses a gray name. Preserve this evidence when tab
+    // entries have not arrived during a world transfer; plain Name: text is ambiguous.
+    private static final Pattern GRAY_PUBLIC = Pattern.compile("^(?:§[0-9a-fk-or])*§7" + NAME + "(?:§[0-9a-fk-or])*\\s*: .+$", Pattern.CASE_INSENSITIVE);
     private static final Set<String> RESERVED = new HashSet<>(Arrays.asList("server", "system", "notice", "announcement", "tip", "info", "warning"));
     // Proxies and alternate connection addresses do not identify the game server.
     // Recognize the complete player format, never gate on the connection hostname.
@@ -31,7 +34,8 @@ public final class PlayerChatParser {
         // Hypixel lobby tabs can omit senders. A recognized Bed Wars level is also
         // player-format evidence; notices still have to match the full chat grammar.
         boolean level = LEVEL_MARKER.matcher(text.substring(0, match.start("sender"))).find();
-        if (!channel && !rank && !level && !players.contains(sender.toLowerCase(Locale.ROOT))) return null;
+        boolean grayPublic = GRAY_PUBLIC.matcher(formatted.trim()).matches();
+        if (!channel && !rank && !level && !grayPublic && !players.contains(sender.toLowerCase(Locale.ROOT))) return null;
         return eligible(sender, match.group("body"));
     }
     public static Message eligible(String sender, String body) {

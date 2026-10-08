@@ -77,8 +77,9 @@ public final class IncomingChatTranslator {
     }
     private void finish(Minecraft mc, Pending item, String text) {
         item.active = false; pending.remove(item);
-        if (text == null) return; // Failure/cancellation never adds noise to chat.
-        if (text != null) item.combined.appendSibling(new ChatComponentText("\n  [译] " + text).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY)));
+        text = TranslationOutput.clean(text);
+        if (!TranslationOutput.hasContent(text)) return; // No empty/punctuation-only translation rows.
+        item.combined.appendSibling(new ChatComponentText("\n  [译] " + text).setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY)));
         try {
             boolean updated = ChatLineUpdater.update(mc.ingameGUI.getChatGUI(), item.original, item.combined);
             trace(updated ? "delivered" : "discarded: original left chat history");
@@ -134,7 +135,7 @@ public final class IncomingChatTranslator {
         if (message == null) {
             Set<String> players = new HashSet<>();
             for (NetworkPlayerInfo player : mc.getNetHandler().getPlayerInfoMap()) players.add(player.getGameProfile().getName().toLowerCase(Locale.ROOT));
-            message = PlayerChatParser.parse(componentMessage.getUnformattedText(), players);
+            message = PlayerChatParser.parse(componentMessage.getFormattedText(), players);
         }
         if (message == null) {
             String plainText = componentMessage.getUnformattedText();
@@ -163,8 +164,8 @@ public final class IncomingChatTranslator {
                     String cacheKey = textModel + ":" + source;
                     result = cache.get(cacheKey);
                     if (result == null) {
-                        result = mod.textTranslation.translate(source, false, textModel).replaceAll("[\\r\\n§]", " ").trim();
-                        if (result.isEmpty() || result.length() > 500) throw new IllegalArgumentException("译文为空或过长");
+                        result = TranslationOutput.clean(mod.textTranslation.translate(source, false, textModel));
+                        if (!TranslationOutput.hasContent(result) || result.length() > 500) throw new IllegalArgumentException("译文无有效内容或过长");
                         cache.put(cacheKey, result);
                     }
                     status = "玩家聊天翻译完成";

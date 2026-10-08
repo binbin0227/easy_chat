@@ -14,7 +14,7 @@ with zipfile.ZipFile(jar) as archive:
             with archive.open(folder+name) as stream:assert hashlib.file_digest(stream,'sha256').hexdigest()==digest
     with archive.open('assets/easychat/models/paraformer-zh-int8/model.int8.onnx') as stream:
         assert hashlib.file_digest(stream,'sha256').hexdigest()=='90bc03034ae1bef9575f8cc798cd1519c8be8aa9e8b458a033e32017ff4d584c'
-    assert '20261008-asr-only' in archive.read('META-INF/MANIFEST.MF').decode()
+    assert '20261008-chat-clean' in archive.read('META-INF/MANIFEST.MF').decode()
     assert 'sherpa-onnx 1.13.8' in archive.read('THIRD_PARTY_NOTICES.md').decode()
     for name in ['licenses/sherpa-onnx-LICENSE.txt','licenses/FunASR-LICENSE.txt','licenses/Paraformer-MODEL-CARD.md','licenses/Paraformer-LICENSE.txt']:
         assert name in names

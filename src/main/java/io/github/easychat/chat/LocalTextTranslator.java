@@ -105,7 +105,9 @@ public final class LocalTextTranslator implements AutoCloseable {
             inputs.put("input_ids", ids); inputs.put("attention_mask", mask);
             try (OrtSession.Result state = encoder.run(inputs);
                  OnnxTensor hidden = OnnxTensor.createTensor(environment, state.get(0).getValue())) {
-                return tokenizer.decode(beamSearch(hidden, mask));
+                String translated = TranslationOutput.clean(tokenizer.decode(beamSearch(hidden, mask)));
+                if (!TranslationOutput.hasContent(translated)) throw new IOException("模型没有生成有效译文");
+                return translated;
             }
         }
     }
