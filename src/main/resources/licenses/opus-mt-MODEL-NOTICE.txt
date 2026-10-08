@@ -17,11 +17,18 @@ The model's Apache-2.0 license is not replaced by the application's MIT license.
 
 OPUS-MT Chinese to English model
 Original contributors: Helsinki-NLP / OPUS-MT contributors
-Original Apache-2.0 declaration:
+Original provider: University of Helsinki Language Technology Research Group.
+Original CC-BY-4.0 declaration (reviewed 2026-10-08):
 https://huggingface.co/Helsinki-NLP/opus-mt-zh-en/blob/main/README.md
 ONNX conversion and quantization: Xenova
 https://huggingface.co/Xenova/opus-mt-zh-en
 Pinned revision: 39d480d52a9ea3065a1f117adfe4dbc55de10e6f
 Bundled files: encoder_model_quantized.onnx, decoder_model_quantized.onnx,
 tokenizer.json. Redistributed without further modification.
-License text: opus-mt-LICENSE.txt.
+Xenova converted and quantized the original weights to ONNX; Easy Chat
+redistributes these converted files without further modification.
+License: https://creativecommons.org/licenses/by/4.0/
+Full terms (including warranty disclaimer): opus-mt-zh-en-CC-BY-4.0.txt.
+Retained original model card: opus-mt-zh-en-MODEL-CARD.md.
+This direction's model license is not replaced by Apache-2.0 or Easy Chat's MIT.
+No endorsement by the original developers or conversion author is implied.

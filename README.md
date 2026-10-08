@@ -1,5 +1,12 @@
 # Easy Chat 0.1.0
 
+<img src="docs/assets/easy-chat-logo-v1.png" alt="Easy Chat pixel-art icon" width="128">
+
+Offline Chinese voice-to-English input and English-to-Chinese player chat translation.
+
+自有代码采用 MIT；第三方模型和库保留各自许可。OPUS 英译中为 Apache-2.0，
+OPUS 中译英为 CC-BY-4.0，详见 [第三方声明](THIRD_PARTY_NOTICES.md)。
+
 Minecraft Forge 1.8.9 的本地语音与聊天翻译模组，目前为 Windows x64 测试版。
 
 - 按住说话键：Paraformer 识别中文，OPUS-MT 中译英，松键后发送或填入聊天框。

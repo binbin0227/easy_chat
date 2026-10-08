@@ -19,6 +19,6 @@
     "resource": "/easychat/text-model-zh-en/",
     "manifest": "/easychat/text-model-zh-en.properties",
     "bytes": 119123183,
-    "license": "Apache-2.0"
+    "license": "CC-BY-4.0"
   }
 ]

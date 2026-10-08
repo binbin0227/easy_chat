@@ -62,6 +62,13 @@ https://github.com/eigen-mirror/eigen/archive/1d8b82b0740839c0de7f1242a3585e3390
 The MPL-2.0 text and copyrights are retained in ONNX Runtime ThirdPartyNotices.
 Recipients may obtain this source; Easy Chat imposes no additional restrictions.
 
+OPUS ONNX Runtime v1.17.3 also includes Eigen under MPL-2.0.
+Its separate, exact unmodified Eigen revision (from v1.17.3/cmake/deps.txt):
+https://gitlab.com/libeigen/eigen/-/tree/e7248b26a1ed53fa030c5c459f7ea095dfd276ac
+https://gitlab.com/libeigen/eigen/-/archive/e7248b26a1ed53fa030c5c459f7ea095dfd276ac/eigen-e7248b26a1ed53fa030c5c459f7ea095dfd276ac.zip
+Dependency manifest: https://github.com/microsoft/onnxruntime/blob/v1.17.3/cmake/deps.txt
+Its MPL-2.0 terms are retained in onnxruntime-ThirdPartyNotices.txt.
+
 fbank source copyright notices:
 * Copyright      2022  Xiaomi Corporation (authors: Fangjun Kuang)
 * Copyright (c)  2022  Xiaomi Corporation (authors: Fangjun Kuang)

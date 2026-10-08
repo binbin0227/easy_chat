@@ -31,13 +31,20 @@ Conversion: https://huggingface.co/csukuangfj/sherpa-onnx-paraformer-zh-2024-03-
 Model license/card: licenses/Paraformer-LICENSE.txt, licenses/Paraformer-MODEL-CARD.md.
 FunASR-LICENSE.txt covers FunASR code (MIT), not these weights.
 
-## OPUS-MT / Marian models - Apache-2.0
+## OPUS-MT / Marian models - direction-specific licenses
 
 Unmodified Helsinki-NLP models, quantized ONNX conversions distributed by Xenova:
 https://huggingface.co/Xenova/opus-mt-en-zh
 https://huggingface.co/Xenova/opus-mt-zh-en
 Both directions include checksum manifests. Original/conversion model notices:
 licenses/opus-mt-LICENSE.txt and licenses/opus-mt-MODEL-NOTICE.txt.
+English to Chinese: Apache-2.0, with the retained original model card.
+Chinese to English: CC-BY-4.0, developed by the University of Helsinki Language
+Technology Research Group. Full license and model card are retained as
+licenses/opus-mt-zh-en-CC-BY-4.0.txt and licenses/opus-mt-zh-en-MODEL-CARD.md.
+Xenova converted and quantized the original models to ONNX; Easy Chat redistributes
+those converted files without further modification. These licenses are separate
+from the application's MIT license; no upstream endorsement is implied.
 Easy Chat implements tokenizer handling and beam-search inference.
 
 ## ONNX Runtime - MIT and accompanying third-party terms

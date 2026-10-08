@@ -7,6 +7,12 @@ with zipfile.ZipFile(jar) as archive:
     assert not any(n.endswith('.gguf') or n.endswith('whisper-bin-x64.zip') or n.endswith('llama-cpu-x64.zip') or n.endswith('llama-vulkan-x64.zip') for n in names)
     assert not any('/WhisperEngine' in n or '/GgufTranslator' in n or '/QwenTranslator' in n for n in names)
     models=json.loads(archive.read('easychat/text-model-catalog.json'));assert {m['id'] for m in models}=={'opus-en-zh','opus-zh-en'}
+    assert {m['id']:m['license'] for m in models}=={'opus-en-zh':'Apache-2.0','opus-zh-en':'CC-BY-4.0'}
+    assert 'Creative Commons Attribution 4.0 International Public License' in archive.read('licenses/opus-mt-zh-en-CC-BY-4.0.txt').decode()
+    assert 'license: cc-by-4.0' in archive.read('licenses/opus-mt-zh-en-MODEL-CARD.md').decode()
+    notices=archive.read('licenses/asr-runtime-NOTICES.txt').decode()
+    assert 'e7248b26a1ed53fa030c5c459f7ea095dfd276ac' in notices
+    assert '1d8b82b0740839c0de7f1242a3585e3390ff5f33' in notices
     for folder,manifest in [('easychat/text-model/','easychat/text-model.properties'),('easychat/text-model-zh-en/','easychat/text-model-zh-en.properties')]:
         for line in archive.read(manifest).decode().splitlines():
             if '=' not in line or line.startswith('#'):continue
